@@ -26,7 +26,8 @@ def flight_list(request):
 @login_required
 def flight_detail(request, id):
     flight = get_object_or_404(Flight, id=id)
-    return render(request, 'flights/flight_detail.html', {'flight': flight})
+    is_crew = request.user.groups.filter(name='crew').exists()  # Verifica se o usuário é do grupo 'crew'
+    return render(request, 'flights/flight_detail.html', {'flight': flight, 'is_crew': is_crew})
 
 @login_required
 def flight_update(request, id):
@@ -52,9 +53,10 @@ def flight_delete(request, id):
 def approve_flight(request, id):
     flight = get_object_or_404(Flight, id=id)
     if request.user.groups.filter(name='crew').exists():
+        flight.approval_status = 'A'  # Altera o status para "Aprovado"
         flight.approved_by_crew = True
         flight.save()
-        send_telegram_message("-4237083945", f"O voo de {flight.origin} para {flight.destination} foi aprovado.")
+        send_telegram_message("YOUR_TELEGRAM_CHAT_ID", f"O voo de {flight.origin} para {flight.destination} foi aprovado.")
         return redirect('flight_list')
     else:
         return redirect('flight_list')

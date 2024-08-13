@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<h1>Detalhes do Voo</h1>
+<h1 class="mb-4">Detalhes do Voo</h1>
 <table class="table">
     <tr>
         <th>Origem</th>
@@ -13,12 +12,12 @@
         <td>{{ flight.destination }}</td>
     </tr>
     <tr>
-        <th>Partida</th>
-        <td>{{ flight.departure_time|date:"M d, Y, H:i a" }}</td>
+        <th>Data e Hora de Partida</th>
+        <td>{{ flight.departure_time }}</td>
     </tr>
     <tr>
-        <th>Retorno</th>
-        <td>{{ flight.return_time|date:"M d, Y, H:i a" }}</td>
+        <th>Data e Hora de Retorno</th>
+        <td>{{ flight.return_time }}</td>
     </tr>
     <tr>
         <th>Status de Aprovação</th>
@@ -33,5 +32,13 @@
         </td>
     </tr>
 </table>
-<a href="{% url 'flight_list' %}" class="btn btn-secondary">Voltar à Lista</a>
+
+{% if is_crew and not flight.approved_by_crew %}
+    <form action="{% url 'approve_flight' flight.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Aprovar Voo</button>
+    </form>
+{% endif %}
+
+<a href="{% url 'flight_list' %}" class="btn btn-secondary mt-3">Voltar à Lista</a>
 {% endblock %}

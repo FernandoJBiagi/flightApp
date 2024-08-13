@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Lista de Voos</h1>
+<a href="{% url 'flight_create' %}" class="btn btn-success mb-3">Adicionar Novo Voo</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Partida</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flight in flights %}
+        <tr>
+            <td>{{ flight.origin }}</td>
+            <td>{{ flight.destination }}</td>
+            <td>{{ flight.departure_time|date:"M d, Y, H:i a" }}</td>
+            <td>
+                {% if flight.approval_status == 'P' %}
+                    <span class="badge badge-warning">Pendente</span>
+                {% elif flight.approval_status == 'A' %}
+                    <span class="badge badge-success">Aprovado</span>
+                {% elif flight.approval_status == 'R' %}
+                    <span class="badge badge-danger">Rejeitado</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'flight_detail' flight.id %}" class="btn btn-primary">Detalhes</a>
+                <a href="{% url 'flight_update' flight.id %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'flight_delete' flight.id %}" class="btn btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

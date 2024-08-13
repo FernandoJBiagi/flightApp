@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Detalhes do Passageiro</h1>
+    <table class="table table-bordered">
+        <tr>
+            <th>Nome Completo</th>
+            <td>{{ passenger.full_name }}</td>
+        </tr>
+        <tr>
+            <th>Data de Nascimento</th>
+            <td>{{ passenger.birth_date }}</td>
+        </tr>
+        <tr>
+            <th>Número do RG</th>
+            <td>{{ passenger.rg_number }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ passenger.email }}</td>
+        </tr>
+        <tr>
+            <th>Documento</th>
+            <td><a href="{{ passenger.document.url }}" download>{{ passenger.document.name }}</a></td>
+        </tr>
+    </table>
+    <a href="{% url 'passenger_list' %}" class="btn btn-secondary mt-3">Voltar à Lista</a>
+    <a href="{% url 'passenger_update' passenger.id %}" class="btn btn-warning mt-3">Editar</a>
+    <a href="{% url 'passenger_delete' passenger.id %}" class="btn btn-danger mt-3">Excluir</a>
+</div>
+{% endblock %}

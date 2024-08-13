@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Manutenções</title>
+</head>
+<body>
+    <h1>Lista de Manutenções</h1>
+    <ul>
+        {% for maintenance in maintenances %}
+        <li>
+            <a href="{% url 'maintenance_detail' maintenance.id %}">{{ maintenance.description }} - {{ maintenance.date }}</a>
+            - <a href="{% url 'maintenance_update' maintenance.id %}">Editar</a>
+            - <a href="{% url 'maintenance_delete' maintenance.id %}">Excluir</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'maintenance_create' %}">Adicionar Nova Manutenção</a>
+</body>
+</html>

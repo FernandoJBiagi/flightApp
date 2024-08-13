@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Relatório</title>
+</head>
+<body>
+    <h1>Detalhes do Relatório #{{ report.id }}</h1>
+    <p><strong>Total de Voos:</strong> {{ report.total_flights }}</p>
+    <p><strong>Horas Voada:</strong> {{ report.total_hours_flown }}</p>
+    <p><strong>Taxa Média de Ocupação:</strong> {{ report.average_occupancy_rate }}%</p>
+
+    <a href="{% url 'report_update' report.id %}">Editar</a>
+    <a href="{% url 'report_list' %}">Voltar à Lista</a>
+</body>
+</html>

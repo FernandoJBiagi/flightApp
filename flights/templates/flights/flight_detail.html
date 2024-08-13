@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Detalhes do Voo</h1>
+<table class="table">
+    <tr>
+        <th>Origem</th>
+        <td>{{ flight.origin }}</td>
+    </tr>
+    <tr>
+        <th>Destino</th>
+        <td>{{ flight.destination }}</td>
+    </tr>
+    <tr>
+        <th>Partida</th>
+        <td>{{ flight.departure_time|date:"M d, Y, H:i a" }}</td>
+    </tr>
+    <tr>
+        <th>Retorno</th>
+        <td>{{ flight.return_time|date:"M d, Y, H:i a" }}</td>
+    </tr>
+    <tr>
+        <th>Status de Aprovação</th>
+        <td>
+            {% if flight.approval_status == 'P' %}
+                <span class="badge badge-warning">Pendente</span>
+            {% elif flight.approval_status == 'A' %}
+                <span class="badge badge-success">Aprovado</span>
+            {% elif flight.approval_status == 'R' %}
+                <span class="badge badge-danger">Rejeitado</span>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+<a href="{% url 'flight_list' %}" class="btn btn-secondary">Voltar à Lista</a>
+{% endblock %}

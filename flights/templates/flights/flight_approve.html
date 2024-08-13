@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Aprovar Voo</h1>
+    <p>Você deseja aprovar o voo de <strong>{{ flight.origin }}</strong> para <strong>{{ flight.destination }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <a href="{% url 'flight_detail' flight.id %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-success">Aprovar Voo</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+<!-- setup/templates/emails/flight_confirmation.html -->
+
+<p>Olá {{ user.get_full_name }},</p>
+
+<p>Seu voo de {{ flight.origin }} para {{ flight.destination }} foi aprovado.</p>
+
+<p>Data de Partida: {{ flight.departure_time }}</p>
+
+<p>Obrigado por escolher nossa companhia.</p>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Excluir Voo</h1>
+<p>Tem certeza que deseja excluir o voo de {{ flight.origin }} para {{ flight.destination }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sim, Excluir</button>
+    <a href="{% url 'flight_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Relatório</title>
+</head>
+<body>
+    <h1>Tem certeza que deseja excluir o relatório #{{ report.id }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sim, Excluir</button>
+        <a href="{% url 'report_list' %}">Cancelar</a>
+    </form>
+</body>
+</html>

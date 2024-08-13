@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">{% if passenger %}Editar Passageiro{% else %}Adicionar Novo Passageiro{% endif %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="full_name">Nome Completo</label>
+            {{ form.full_name }}
+        </div>
+        <div class="form-group">
+            <label for="birth_date">Data de Nascimento</label>
+            {{ form.birth_date }}
+        </div>
+        <div class="form-group">
+            <label for="rg_number">Número do RG</label>
+            {{ form.rg_number }}
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            <label for="document">Documento</label>
+            {{ form.document }}
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+        <a href="{% url 'passenger_list' %}" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

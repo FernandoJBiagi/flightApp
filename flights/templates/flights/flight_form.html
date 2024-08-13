@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %} {# Certifique-se de carregar o template tag correto #}
+
+{% block content %}
+<h1 class="mb-4">{% if flight %}Editar Voo{% else %}Adicionar Novo Voo{% endif %}</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="origin">Origem</label>
+        {{ form.origin|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+        <label for="destination">Destino</label>
+        {{ form.destination|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+        <label for="departure_time">Data e Hora de Partida</label>
+        {{ form.departure_time|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+        <label for="return_time">Data e Hora de Retorno</label>
+        {{ form.return_time|add_class:"form-control" }}
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    <a href="{% url 'flight_list' %}" class="btn btn-secondary mt-3">Cancelar</a>
+</form>
+{% endblock %}

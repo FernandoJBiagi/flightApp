@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load form_filters %}
 
 {% block content %}
 <div class="container mt-4">
@@ -24,6 +25,10 @@
         <div class="form-group">
             <label for="document">Documento</label>
             {{ form.document }}
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone</label>
+            {{ form.telefone|add_class:"form-control" }}
         </div>
         <button type="submit" class="btn btn-primary mt-3">Salvar</button>
         <a href="{% url 'passenger_list' %}" class="btn btn-secondary mt-3">Cancelar</a>

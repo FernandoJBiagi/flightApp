@@ -32,3 +32,20 @@ class Flight(models.Model):
 
     def __str__(self):
         return f"{self.origin} to {self.destination} at {self.departure_time}"
+
+class Passenger(models.Model):
+    full_name = models.CharField(max_length=255)
+    birth_date = models.DateField()
+    rg = models.CharField(max_length=20)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.full_name
+
+class FlightPassenger(models.Model):
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
+    has_luggage = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.passenger.full_name} on {self.flight.origin} to {self.flight.destination}"

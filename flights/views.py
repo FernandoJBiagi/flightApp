@@ -1,22 +1,33 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Flight
-from .forms import FlightForm
+from .forms import FlightForm, FlightPassengerFormSet
 from .utils import send_telegram_message
 
 @login_required
 def flight_create(request):
     if request.method == "POST":
         form = FlightForm(request.POST)
-        if form.is_valid():
+        formset = FlightPassengerFormSet(request.POST)
+
+        if form.is_valid() and formset.is_valid():
             flight = form.save(commit=False)
             flight.created_by = request.user
             flight.save()
+
+            passengers = formset.save(commit=False)
+            for passenger in passengers:
+                passenger.flight = flight
+                passenger.save()
+
             send_telegram_message("-4237083945", f"Novo voo criado: {flight.origin} para {flight.destination}")
             return redirect('flight_list')
     else:
         form = FlightForm()
-    return render(request, 'flights/flight_form.html', {'form': form})
+        formset = FlightPassengerFormSet()
+
+    return render(request, 'flights/flight_form.html', {'form': form, 'formset': formset})
+
 
 @login_required
 def flight_list(request):

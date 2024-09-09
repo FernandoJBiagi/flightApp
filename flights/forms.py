@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from .models import Flight
+from .models import Flight, FlightPassenger, Passenger
 
 class FlightForm(forms.ModelForm):
     class Meta:
@@ -23,3 +23,15 @@ class FlightForm(forms.ModelForm):
         if return_time <= departure_time:
             raise forms.ValidationError('A data de retorno deve ser após a data de partida.')
         return return_time
+
+class FlightPassengerForm(forms.ModelForm):
+    passenger = forms.ModelChoiceField(queryset=Passenger.objects.all(), empty_label="Selecione um passageiro")
+
+    class Meta:
+        model = FlightPassenger
+        fields = ['passenger', 'has_luggage']
+
+FlightPassengerFormSet = forms.inlineformset_factory(
+    Flight, FlightPassenger, form=FlightPassengerForm, extra=1, can_delete=True
+)
+
